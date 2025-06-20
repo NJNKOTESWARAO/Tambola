@@ -1,4 +1,4 @@
-/* style.css */
+/* Reset and Base Styles */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -24,6 +24,7 @@ body.dark {
   margin-bottom: 2rem;
 }
 
+/* Buttons */
 .button-group.vertical {
   display: flex;
   flex-direction: column;
@@ -40,13 +41,20 @@ body.dark {
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .main-button:hover {
   background-color: #0056b3;
+  transform: scale(1.03);
 }
 
+.reset {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+/* Home Icon */
 .home-icon {
   font-size: 1.5rem;
   position: fixed;
@@ -56,6 +64,7 @@ body.dark {
   color: inherit;
 }
 
+/* Input Section */
 .input-section {
   display: flex;
   flex-direction: column;
@@ -72,6 +81,7 @@ input[type="number"] {
   max-width: 300px;
 }
 
+/* Fullscreen Animation */
 .fullscreen-animation {
   position: fixed;
   top: 0;
@@ -91,6 +101,7 @@ input[type="number"] {
   display: none;
 }
 
+/* Ticket Styling */
 .ticket-container {
   margin-top: 2rem;
   display: grid;
@@ -106,16 +117,18 @@ input[type="number"] {
 .ticket table {
   width: 100%;
   border-collapse: collapse;
+  border: 2px solid #007bff;
 }
 
 .ticket td {
   width: 10%;
   height: 40px;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid #007bff;
   font-size: 1.1rem;
 }
 
+/* Number Grid */
 .number-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -138,6 +151,7 @@ input[type="number"] {
   font-weight: bold;
 }
 
+/* Recent Numbers */
 .recent-numbers {
   display: flex;
   flex-wrap: wrap;
@@ -154,6 +168,7 @@ input[type="number"] {
   font-weight: 600;
 }
 
+/* Current Number Display */
 .current-number {
   font-size: 3rem;
   text-align: center;
@@ -166,6 +181,7 @@ input[type="number"] {
   100% { transform: scale(1.1); }
 }
 
+/* Timer Options */
 .timer-options {
   display: flex;
   justify-content: center;
@@ -179,6 +195,12 @@ input[type="number"] {
   border-radius: 20px;
   cursor: pointer;
   user-select: none;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.timer-pill:hover {
+  background: #ccc;
+  transform: scale(1.05);
 }
 
 .timer-pill input {
@@ -191,6 +213,7 @@ input[type="radio"]:checked + label,
   color: white;
 }
 
+/* Button Row */
 .button-row {
   display: flex;
   justify-content: center;
@@ -198,12 +221,7 @@ input[type="radio"]:checked + label,
   margin-bottom: 1rem;
 }
 
-.reset {
-  display: block;
-  margin: 0 auto;
-}
-
-/* Dark Mode Support */
+/* Dark Mode Overrides */
 body.dark .main-button {
   background-color: #444;
   color: #fff;
@@ -228,54 +246,7 @@ body.dark .number-grid div.picked {
 body.dark .recent-numbers span {
   background: #555;
 }
-/* Button press animation */
-.clicked {
-  transform: scale(0.95);
-  transition: transform 0.1s ease;
-}
 
-/* Timer selection visual */
-.timer-pill.selected {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
-}
-
-/* Button press animation */
-.clicked {
-  transform: scale(0.95);
-  transition: transform 0.1s ease;
-}
-
-/* Selected timer */
-.timer-pill.selected {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
-}
-
-/* Ticket grid fix */
-.ticket table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 2px solid #007bff;
-}
-
-.ticket td {
-  border: 1px solid #007bff;
-  height: 50px;
-  width: 10%;
-  text-align: center;
-  font-size: 1.2rem;
-  background-color: #fff;
-}
-
-body.dark .ticket td {
-  background-color: #222;
-  color: #fff;
-  border: 1px solid #666;
+body.dark .timer-pill:hover {
+  background: #666;
 }

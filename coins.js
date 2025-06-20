@@ -23,11 +23,12 @@ function speakNumber(num) {
     audio.currentTime = 0;
   }
   const padded = String(num).padStart(2, '0');
-  audio = new Audio(`audio/${padded}.mp3`);
+  audio = new Audio(`${padded}.mp3`);
   audio.play().catch(() => {
     console.warn(`Audio file not found: ${padded}.mp3`);
   });
 }
+
 
 function pickRandomNumber() {
   if (pickedNumbers.length >= 90) return;

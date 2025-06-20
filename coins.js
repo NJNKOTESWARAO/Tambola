@@ -1,4 +1,3 @@
-// coins.js
 const numberGrid = document.getElementById("numberGrid");
 const currentNumber = document.getElementById("currentNumber");
 const recentNumbers = document.getElementById("recentNumbers");
@@ -6,7 +5,6 @@ const startPauseBtn = document.getElementById("startPauseBtn");
 const nextBtn = document.getElementById("nextBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-let timer = null;
 let timerInterval = null;
 let pickedNumbers = [];
 let audio = null;
@@ -24,10 +22,11 @@ function speakNumber(num) {
     audio.pause();
     audio.currentTime = 0;
   }
-  const audioName = num < 10 ? `s${num}` : `d${String(num).padStart(2, '0')}`;
-  audio = new Audio(`audio/${audioName}.mp3`);
-  audio.onerror = () => alert(`Missing audio file for ${num}: ${audioName}.mp3`);
-  audio.play();
+  const padded = String(num).padStart(2, '0');
+  audio = new Audio(`audio/${padded}.mp3`);
+  audio.play().catch(() => {
+    console.warn(`Audio file not found: ${padded}.mp3`);
+  });
 }
 
 function pickRandomNumber() {
@@ -60,8 +59,8 @@ startPauseBtn.addEventListener("click", () => {
       alert("Please select a timer interval (3s, 5s, or 7s)");
       return;
     }
-    timer = parseInt(selected.value);
-    timerInterval = setInterval(pickRandomNumber, timer);
+    const interval = parseInt(selected.value);
+    timerInterval = setInterval(pickRandomNumber, interval);
     startPauseBtn.textContent = "Pause";
   } else {
     clearInterval(timerInterval);

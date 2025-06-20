@@ -26,6 +26,7 @@ function speakNumber(num) {
   }
   const audioName = num < 10 ? `s${num}` : `d${String(num).padStart(2, '0')}`;
   audio = new Audio(`audio/${audioName}.mp3`);
+  audio.onerror = () => alert(`Missing audio file for ${num}: ${audioName}.mp3`);
   audio.play();
 }
 
@@ -37,7 +38,6 @@ function pickRandomNumber() {
   } while (pickedNumbers.includes(next));
 
   pickedNumbers.push(next);
-
   document.getElementById(`cell-${next}`).classList.add("picked");
   currentNumber.textContent = next;
   speakNumber(next);
@@ -45,14 +45,15 @@ function pickRandomNumber() {
   const span = document.createElement("span");
   span.textContent = next;
   recentNumbers.appendChild(span);
-
-  // Limit to last 10 picks
   while (recentNumbers.children.length > 10) {
     recentNumbers.removeChild(recentNumbers.firstChild);
   }
 }
 
 startPauseBtn.addEventListener("click", () => {
+  startPauseBtn.classList.add("clicked");
+  setTimeout(() => startPauseBtn.classList.remove("clicked"), 150);
+
   if (!timerInterval) {
     const selected = document.querySelector("input[name='timer']:checked");
     if (!selected) {
@@ -71,16 +72,17 @@ startPauseBtn.addEventListener("click", () => {
 
 document.querySelectorAll("input[name='timer']").forEach(radio => {
   radio.addEventListener("click", (e) => {
-    if (radio === e.target && radio.checked) {
-      if (radio.dataset.checked === "true") {
-        radio.checked = false;
-        radio.dataset.checked = "false";
-      } else {
-        radio.dataset.checked = "true";
-        document.querySelectorAll("input[name='timer']").forEach(r => {
-          if (r !== radio) r.dataset.checked = "false";
-        });
-      }
+    if (radio.dataset.checked === "true") {
+      radio.checked = false;
+      radio.dataset.checked = "false";
+      radio.parentElement.classList.remove("selected");
+    } else {
+      radio.dataset.checked = "true";
+      document.querySelectorAll("input[name='timer']").forEach(r => {
+        r.dataset.checked = "false";
+        r.parentElement.classList.remove("selected");
+      });
+      radio.parentElement.classList.add("selected");
     }
 
     if (timerInterval) {
@@ -92,6 +94,9 @@ document.querySelectorAll("input[name='timer']").forEach(radio => {
 });
 
 nextBtn.addEventListener("click", () => {
+  nextBtn.classList.add("clicked");
+  setTimeout(() => nextBtn.classList.remove("clicked"), 150);
+
   if (timerInterval) {
     alert("Please pause auto mode before using Next");
     return;

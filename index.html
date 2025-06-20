@@ -1,44 +1,27 @@
+<!-- tickets.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tambola - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Tickets</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script defer src="tickets.js"></script>
 </head>
-<body>
-  <!-- Dark Mode Toggle -->
-  <div class="dark-toggle">
-    <label class="switch">
-      <input type="checkbox" id="darkModeToggle">
-      <span class="slider round"></span>
-    </label>
-  </div>
+<body class="tickets-page">
+  <header>
+    <a href="index.html" class="home-icon">🏠</a>
+  </header>
 
-  <div class="container">
-    <h1>Tambola Game</h1>
-    <div class="vertical-buttons">
-      <button onclick="location.href='tickets.html'">Generate Tickets</button>
-      <button onclick="location.href='coins.html'">Pick Coins</button>
+  <main class="ticket-main">
+    <h2 class="page-title">Generate Your Tambola Tickets</h2>
+    <div class="input-section">
+      <input type="number" id="ticketCount" min="1" max="10" placeholder="Enter number of tickets (1-10)" />
+      <button id="generateBtn" class="main-button">Generate</button>
     </div>
-  </div>
-
-  <script>
-    const toggle = document.getElementById('darkModeToggle');
-    const currentMode = localStorage.getItem('darkMode');
-    if (currentMode === 'enabled') {
-      document.body.classList.add('dark-mode');
-      toggle.checked = true;
-    }
-
-    toggle.addEventListener('change', function () {
-      if (this.checked) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-      } else {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-      }
-    });
-  </script>
+    <div id="animation" class="fullscreen-animation hidden">Generating Tickets...</div>
+    <div id="ticketContainer" class="ticket-container"></div>
+  </main>
 </body>
 </html>

@@ -2,65 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generate Tickets</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script defer src="tickets.js"></script>
 </head>
-<body>
-  <!-- Home icon -->
-  <a href="index.html" class="home-icon">
-    <i class="ph ph-house"></i>
-  </a>
+<body class="tickets-page">
+  <header>
+    <a href="index.html" class="home-icon">🏠</a>
+  </header>
 
-  <!-- Dark Mode Toggle -->
-  <div class="dark-toggle">
-    <label class="switch">
-      <input type="checkbox" id="darkModeToggle">
-      <span class="slider round"></span>
-    </label>
-  </div>
-
-  <div class="container">
-    <h1>Generate Tickets</h1>
-    <input type="number" id="ticketCount" placeholder="Enter number of tickets" min="1" max="10">
-    <button onclick="generateTickets()">Generate</button>
-    <div id="animation" class="animation">Generating...</div>
-    <div id="ticketsContainer"></div>
-  </div>
-
-  <script src="tickets.js"></script>
-  <script>
-    // Dark mode logic
-    const toggle = document.getElementById('darkModeToggle');
-    const currentMode = localStorage.getItem('darkMode');
-    if (currentMode === 'enabled') {
-      document.body.classList.add('dark-mode');
-      toggle.checked = true;
-    }
-
-    toggle.addEventListener('change', function () {
-      if (this.checked) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-      } else {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-      }
-    });
-
-    // Check for shared ticket
-    const shared = getSharedTicketFromURL();
-    if (shared) {
-      document.getElementById("ticketCount").style.display = "none";
-      document.querySelector("button").style.display = "none";
-      document.getElementById("animation").style.display = "none";
-
-      if (Array.isArray(shared[0])) {
-        shared.forEach(ticket => displayTicket(ticket));
-      } else {
-        displayTicket(shared);
-      }
-    }
-  </script>
+  <main class="ticket-main">
+    <h2 class="page-title">Generate Your Tambola Tickets</h2>
+    <div class="input-section">
+      <input type="number" id="ticketCount" min="1" max="10" placeholder="Enter number of tickets (1-10)" />
+      <button id="generateBtn" class="main-button">Generate</button>
+    </div>
+    <div id="animation" class="fullscreen-animation hidden">Generating Tickets...</div>
+    <div id="ticketContainer" class="ticket-container"></div>
+  </main>
 </body>
 </html>

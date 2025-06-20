@@ -1,133 +1,112 @@
-let picked = [];
-let autoInterval = null;
-let currentVoice = null;
+// coins.js
+const numberGrid = document.getElementById("numberGrid");
+const currentNumber = document.getElementById("currentNumber");
+const recentNumbers = document.getElementById("recentNumbers");
+const startPauseBtn = document.getElementById("startPauseBtn");
+const nextBtn = document.getElementById("nextBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-function generateNumberGrid() {
-  const grid = document.getElementById("numberGrid");
-  grid.innerHTML = "";
-  for (let i = 1; i <= 90; i++) {
-    const cell = document.createElement("div");
-    cell.className = "gridNumber";
-    cell.id = `num-${i}`;
-    cell.textContent = i;
-    grid.appendChild(cell);
-  }
+let timer = null;
+let timerInterval = null;
+let pickedNumbers = [];
+let audio = null;
+
+// Create number grid
+for (let i = 1; i <= 90; i++) {
+  const cell = document.createElement("div");
+  cell.textContent = i;
+  cell.id = `cell-${i}`;
+  numberGrid.appendChild(cell);
 }
 
-function pickCoin() {
-  if (picked.length >= 90) return;
+function speakNumber(num) {
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+  const audioName = num < 10 ? `s${num}` : `d${String(num).padStart(2, '0')}`;
+  audio = new Audio(`audio/${audioName}.mp3`);
+  audio.play();
+}
 
-  let num;
+function pickRandomNumber() {
+  if (pickedNumbers.length >= 90) return;
+  let next;
   do {
-    num = Math.floor(Math.random() * 90) + 1;
-  } while (picked.includes(num));
+    next = Math.floor(Math.random() * 90) + 1;
+  } while (pickedNumbers.includes(next));
 
-  picked.push(num);
+  pickedNumbers.push(next);
 
-  document.getElementById("currentNumber").textContent = num;
+  document.getElementById(`cell-${next}`).classList.add("picked");
+  currentNumber.textContent = next;
+  speakNumber(next);
 
-  const cell = document.getElementById(`num-${num}`);
-  if (cell) cell.classList.add("picked");
+  const span = document.createElement("span");
+  span.textContent = next;
+  recentNumbers.appendChild(span);
 
-  updateRecent();
-
-  // Stop previous voice
-  if (currentVoice && !currentVoice.paused) {
-    currentVoice.pause();
-    currentVoice.currentTime = 0;
+  // Limit to last 10 picks
+  while (recentNumbers.children.length > 10) {
+    recentNumbers.removeChild(recentNumbers.firstChild);
   }
-
-  const voiceFile = num < 10 ? `0${num}.mp3` : `${num}.mp3`;
-  currentVoice = new Audio(voiceFile);
-  currentVoice.play();
 }
 
-function manualPick() {
-  if (autoInterval !== null) return; // Prevent if auto is active
-  pickCoin();
-}
+startPauseBtn.addEventListener("click", () => {
+  if (!timerInterval) {
+    const selected = document.querySelector("input[name='timer']:checked");
+    if (!selected) {
+      alert("Please select a timer interval (3s, 5s, or 7s)");
+      return;
+    }
+    timer = parseInt(selected.value);
+    timerInterval = setInterval(pickRandomNumber, timer);
+    startPauseBtn.textContent = "Pause";
+  } else {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    startPauseBtn.textContent = "Start";
+  }
+});
 
-function toggleAutoPick() {
-  const button = document.getElementById("startPauseBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const selected = document.querySelector('input[name="timer"].toggled');
+document.querySelectorAll("input[name='timer']").forEach(radio => {
+  radio.addEventListener("click", (e) => {
+    if (radio === e.target && radio.checked) {
+      if (radio.dataset.checked === "true") {
+        radio.checked = false;
+        radio.dataset.checked = "false";
+      } else {
+        radio.dataset.checked = "true";
+        document.querySelectorAll("input[name='timer']").forEach(r => {
+          if (r !== radio) r.dataset.checked = "false";
+        });
+      }
+    }
 
-  if (!selected) {
-    alert("Please select a timer before starting.");
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      startPauseBtn.textContent = "Start";
+    }
+  });
+});
+
+nextBtn.addEventListener("click", () => {
+  if (timerInterval) {
+    alert("Please pause auto mode before using Next");
     return;
   }
+  pickRandomNumber();
+});
 
-  const ms = parseInt(selected.value);
-
-  if (autoInterval === null) {
-    button.textContent = "Pause";
-    autoInterval = setInterval(pickCoin, ms);
-    nextBtn.disabled = true;
-  } else {
-    clearInterval(autoInterval);
-    autoInterval = null;
-    button.textContent = "Start Auto Pick";
-    nextBtn.disabled = false;
+resetBtn.addEventListener("click", () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
   }
-}
-
-function updateTimerBehavior() {
-  document.querySelectorAll('input[name="timer"]').forEach(input => {
-    input.addEventListener("click", function () {
-      if (this.classList.contains("toggled")) {
-        this.checked = false;
-        this.classList.remove("toggled");
-
-        if (autoInterval !== null) toggleAutoPick(); // Pause auto if timer removed
-      } else {
-        document.querySelectorAll('input[name="timer"]').forEach(i => i.classList.remove("toggled"));
-        this.classList.add("toggled");
-
-        if (autoInterval !== null) {
-          clearInterval(autoInterval);
-          autoInterval = setInterval(pickCoin, parseInt(this.value));
-        }
-      }
-    });
-  });
-}
-
-function updateRecent() {
-  const recent = picked.slice(-10);
-  const container = document.getElementById("recentNumbers");
-  container.innerHTML = "";
-  recent.forEach(num => {
-    const span = document.createElement("span");
-    span.textContent = num;
-    container.appendChild(span);
-  });
-}
-
-function resetGame() {
-  picked = [];
-  document.getElementById("currentNumber").textContent = "";
-  document.getElementById("recentNumbers").innerHTML = "";
-  generateNumberGrid();
-
-  if (autoInterval !== null) {
-    clearInterval(autoInterval);
-    autoInterval = null;
-  }
-
-  document.getElementById("startPauseBtn").textContent = "Start Auto Pick";
-  document.getElementById("nextBtn").disabled = false;
-
-  document.querySelectorAll('input[name="timer"]').forEach(input => {
-    input.checked = false;
-    input.classList.remove("toggled");
-  });
-
-  if (currentVoice && !currentVoice.paused) {
-    currentVoice.pause();
-    currentVoice.currentTime = 0;
-  }
-}
-
-// Initialize
-generateNumberGrid();
-updateTimerBehavior();
+  pickedNumbers = [];
+  currentNumber.textContent = "--";
+  recentNumbers.innerHTML = "";
+  numberGrid.querySelectorAll("div").forEach(cell => cell.classList.remove("picked"));
+  startPauseBtn.textContent = "Start";
+});

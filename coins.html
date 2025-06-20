@@ -11,6 +11,7 @@
 <body class="coins-page">
   <header>
     <a href="index.html" class="home-icon">🏠</a>
+    <button onclick="toggleDarkMode()" class="main-button" style="position: fixed; top: 10px; right: 10px;">🌙</button>
   </header>
 
   <main class="coins-main">
@@ -39,5 +40,11 @@
 
     <button id="resetBtn" class="main-button reset">Reset Game</button>
   </main>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
 </body>
 </html>

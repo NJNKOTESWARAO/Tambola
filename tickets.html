@@ -11,6 +11,7 @@
 <body class="tickets-page">
   <header>
     <a href="index.html" class="home-icon">🏠</a>
+    <button onclick="toggleDarkMode()" class="main-button" style="position: fixed; top: 10px; right: 10px;">🌙</button>
   </header>
 
   <main class="ticket-main">
@@ -22,5 +23,11 @@
     <div id="animation" class="fullscreen-animation hidden">Generating Tickets...</div>
     <div id="ticketContainer" class="ticket-container"></div>
   </main>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
 </body>
 </html>

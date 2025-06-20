@@ -243,7 +243,22 @@ body.dark .recent-numbers span {
   transition: transform 0.2s ease;
 }
 
-/* Ticket table lines fix */
+/* Button press animation */
+.clicked {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* Selected timer */
+.timer-pill.selected {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Ticket grid fix */
 .ticket table {
   width: 100%;
   border-collapse: collapse;

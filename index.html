@@ -1,27 +1,19 @@
-<!-- tickets.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generate Tickets</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tambola Game</title>
+  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script defer src="tickets.js"></script>
 </head>
-<body class="tickets-page">
-  <header>
-    <a href="index.html" class="home-icon">🏠</a>
-  </header>
-
-  <main class="ticket-main">
-    <h2 class="page-title">Generate Your Tambola Tickets</h2>
-    <div class="input-section">
-      <input type="number" id="ticketCount" min="1" max="10" placeholder="Enter number of tickets (1-10)" />
-      <button id="generateBtn" class="main-button">Generate</button>
+<body class="home-page">
+  <div class="container">
+    <h1 class="app-title">Tambola Game</h1>
+    <div class="button-group vertical">
+      <a href="tickets.html" class="main-button">🎟️ Generate Tickets</a>
+      <a href="coins.html" class="main-button">🔢 Pick Coins</a>
     </div>
-    <div id="animation" class="fullscreen-animation hidden">Generating Tickets...</div>
-    <div id="ticketContainer" class="ticket-container"></div>
-  </main>
+  </div>
 </body>
 </html>

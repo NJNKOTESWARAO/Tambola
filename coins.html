@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pick Coins</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <a href="index.html" class="home-icon">
+    <i class="ph ph-house"></i>
+  </a>
+
+  <div class="dark-toggle">
+    <label class="switch">
+      <input type="checkbox" id="darkModeToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
+  <div class="container">
+    <h1>Pick Coins</h1>
+
+    <div id="numberGrid"></div>
+
+    <div class="recent-label">Recent Numbers</div>
+    <div id="recentNumbers" class="recent-row"></div>
+
+    <div id="currentNumber" class="current-number"></div>
+
+    <div class="timer-section-horizontal">
+      <label><input type="radio" name="timer" value="3000"> 3 sec</label>
+      <label><input type="radio" name="timer" value="5000"> 5 sec</label>
+      <label><input type="radio" name="timer" value="7000"> 7 sec</label>
+    </div>
+
+    <div class="start-next-row">
+      <button id="startPauseBtn" onclick="toggleAutoPick()">Start Auto Pick</button>
+      <button id="nextBtn" onclick="manualPick()" disabled>Next</button>
+    </div>
+
+    <button onclick="resetGame()" class="reset-btn">Reset Game</button>
+  </div>
+
+  <script src="coins.js"></script>
+  <script>
+    const toggle = document.getElementById('darkModeToggle');
+    const currentMode = localStorage.getItem('darkMode');
+    if (currentMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', function () {
+      if (this.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-// tickets.js
 function generateTicket() {
   const ticket = [];
 
@@ -16,6 +15,7 @@ function generateTicket() {
 
   // transpose and add 4 empty cells per row
   const final = Array.from({ length: 3 }, () => Array(9).fill(""));
+
   for (let col = 0; col < 9; col++) {
     const nums = ticket[col];
     for (let row = 0; row < 3; row++) {
@@ -35,22 +35,29 @@ function generateTicket() {
 }
 
 function renderTicket(ticket) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "ticket"; // this is what applies the borders via CSS
+
   const table = document.createElement("table");
+
   ticket.forEach(row => {
     const tr = document.createElement("tr");
     row.forEach(cell => {
       const td = document.createElement("td");
-      td.textContent = cell;
+      td.textContent = cell || ""; // avoid showing "undefined"
       tr.appendChild(td);
     });
     table.appendChild(tr);
   });
-  return table;
+
+  wrapper.appendChild(table);
+  return wrapper;
 }
 
 function generateUniqueTickets(count) {
   const tickets = [];
   const seen = new Set();
+
   while (tickets.length < count) {
     const t = generateTicket();
     const key = JSON.stringify(t);
@@ -59,20 +66,29 @@ function generateUniqueTickets(count) {
       tickets.push(t);
     }
   }
+
   return tickets;
 }
 
 document.getElementById("generateBtn").addEventListener("click", () => {
   const count = parseInt(document.getElementById("ticketCount").value);
-  if (!count || count < 1 || count > 10) return alert("Enter ticket count between 1 and 10");
+  if (!count || count < 1 || count > 10) {
+    return alert("Enter ticket count between 1 and 10");
+  }
 
   const anim = document.getElementById("animation");
   anim.classList.remove("hidden");
+
   setTimeout(() => {
     anim.classList.add("hidden");
+
     const container = document.getElementById("ticketContainer");
     container.innerHTML = "";
+
     const tickets = generateUniqueTickets(count);
-    tickets.forEach(t => container.appendChild(renderTicket(t)));
+    tickets.forEach(ticket => {
+      const ticketElement = renderTicket(ticket);
+      container.appendChild(ticketElement);
+    });
   }, 1000);
 });

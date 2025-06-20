@@ -1,208 +1,230 @@
-/* Global styles */
+/* style.css */
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f5f5f5;
   color: #222;
-  transition: background-color 0.3s, color 0.3s;
-}
-body.dark {
-  background-color: #1e1e1e;
-  color: #f4f4f4;
-}
-.container, .ticket-main, .coins-main {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-h1.app-title, h2.page-title {
-  font-weight: 600;
-  margin-bottom: 2rem;
-  text-align: center;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Buttons */
-.main-button {
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  margin: 0.5rem;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+body.dark {
+  background-color: #1e1e1e;
+  color: #fff;
 }
-.main-button:hover {
-  background-color: #0056b3;
+
+.container, .ticket-main, .coins-main {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
 }
-.reset {
-  background-color: #dc3545;
+
+.app-title, .page-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
-.reset:hover {
-  background-color: #a71d2a;
-}
+
 .button-group.vertical {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-.button-row {
-  display: flex;
-  justify-content: center;
   gap: 1rem;
-  margin-top: 1.5rem;
+  align-items: center;
 }
 
-/* Home icon */
+.main-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background 0.3s;
+}
+
+.main-button:hover {
+  background-color: #0056b3;
+}
+
 .home-icon {
-  font-size: 1.8rem;
-  position: absolute;
+  font-size: 1.5rem;
+  position: fixed;
   top: 10px;
-  left: 15px;
+  left: 10px;
   text-decoration: none;
   color: inherit;
 }
 
-/* Ticket input */
 .input-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1rem;
+  align-items: center;
 }
+
 input[type="number"] {
   padding: 0.7rem;
   font-size: 1rem;
-  width: 250px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  width: 80%;
+  max-width: 300px;
 }
 
-/* Ticket display */
-.ticket-container {
-  margin-top: 2rem;
-  display: grid;
-  gap: 2rem;
-}
-.ticket {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 5px;
-  padding: 1rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-.ticket div {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-}
-body.dark .ticket {
-  background: #2a2a2a;
-}
-body.dark .ticket div {
-  background-color: #3a3a3a;
-  border-color: #555;
-}
-
-/* Coin Picker Styles */
-.number-grid {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 5px;
-  margin-bottom: 1.5rem;
-  width: 100%;
-  max-width: 600px;
-}
-.number-grid div {
-  padding: 10px;
-  border: 1px solid #aaa;
-  text-align: center;
-  border-radius: 6px;
-  background-color: white;
-}
-.number-grid div.picked {
-  background-color: #28a745;
-  color: white;
-  font-weight: bold;
-}
-body.dark .number-grid div {
-  background-color: #2e2e2e;
-  color: #eee;
-}
-body.dark .number-grid div.picked {
-  background-color: #198754;
-}
-
-/* Recent numbers */
-.recent-numbers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.recent-numbers span {
-  background: #007bff;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  min-width: 35px;
-  text-align: center;
-}
-body.dark .recent-numbers span {
-  background: #0056b3;
-}
-
-/* Current number display */
-.current-number {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Timer pills */
-.timer-options {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.timer-pill {
-  background: #ddd;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  cursor: pointer;
-}
-.timer-pill input {
-  margin-right: 5px;
-}
-body.dark .timer-pill {
-  background-color: #444;
-}
-
-/* Fullscreen animation */
 .fullscreen-animation {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 123, 255, 0.9);
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 123, 255, 0.9);
   color: white;
-  font-size: 2rem;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-size: 2rem;
   z-index: 1000;
 }
+
 .hidden {
   display: none;
+}
+
+.ticket-container {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.ticket {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ticket table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket td {
+  width: 10%;
+  height: 40px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1.1rem;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.number-grid div {
+  padding: 0.6rem;
+  background: #eaeaea;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  transition: background 0.3s;
+}
+
+.number-grid div.picked {
+  background: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.recent-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.recent-numbers span {
+  padding: 0.5rem 0.8rem;
+  background: #007bff;
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.current-number {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.timer-options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.timer-pill {
+  padding: 0.6rem 1.2rem;
+  background: #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.timer-pill input {
+  display: none;
+}
+
+input[type="radio"]:checked + label,
+.timer-pill input:checked + span {
+  background: #007bff;
+  color: white;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reset {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Dark Mode Support */
+body.dark .main-button {
+  background-color: #444;
+  color: #fff;
+}
+
+body.dark .ticket td,
+body.dark input,
+body.dark .timer-pill {
+  background-color: #333;
+  color: white;
+  border-color: #555;
+}
+
+body.dark .number-grid div {
+  background: #444;
+}
+
+body.dark .number-grid div.picked {
+  background: #00cc66;
+}
+
+body.dark .recent-numbers span {
+  background: #555;
 }

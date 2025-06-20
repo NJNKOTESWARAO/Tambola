@@ -36,7 +36,7 @@ function generateTicket() {
 
 function renderTicket(ticket) {
   const wrapper = document.createElement("div");
-  wrapper.className = "ticket"; // this is what applies the borders via CSS
+  wrapper.className = "ticket";  // <-- This class gives border and styling
 
   const table = document.createElement("table");
 
@@ -44,7 +44,7 @@ function renderTicket(ticket) {
     const tr = document.createElement("tr");
     row.forEach(cell => {
       const td = document.createElement("td");
-      td.textContent = cell || ""; // avoid showing "undefined"
+      td.textContent = cell;
       tr.appendChild(td);
     });
     table.appendChild(tr);
@@ -53,6 +53,7 @@ function renderTicket(ticket) {
   wrapper.appendChild(table);
   return wrapper;
 }
+
 
 function generateUniqueTickets(count) {
   const tickets = [];
